@@ -168,6 +168,24 @@ type AudioItem struct {
 	Stream Stream `json:"stream,omitempty"`
 }
 
+// VideoAppDirective contains device level instructions on how to handle the response.
+type VideoAppDirective struct {
+	Type      string     `json:"type"`
+	VideoItem *VideoItem `json:"videoItem"`
+}
+
+// VideoItem contains a video file for playback
+type VideoItem struct {
+	Source   string    `json:"source"`
+	Metadata *Metadata `json:"metadata"`
+}
+
+// Metadata contains additional information about the VideoItem
+type Metadata struct {
+	Title    string `json:"title"`
+	Subtitle string `json:"subtitle"`
+}
+
 // Stream contains instructions on playing an audio stream.
 type Stream struct {
 	Token                string `json:"token"`
@@ -303,6 +321,21 @@ func (r *Response) AddAudioPlayer(playerType, playBehavior, streamToken, url str
 				Token:                streamToken,
 				URL:                  url,
 				OffsetInMilliseconds: offsetInMilliseconds,
+			},
+		},
+	}
+	r.Directives = append(r.Directives, d)
+}
+
+// AddVideoApp adds a VideoApp directive to the Response
+func (r *Response) AddVideoApp(appType, sourceFile, title, subtitle string) {
+	d := VideoAppDirective{
+		Type: appType,
+		VideoItem: &VideoItem{
+			Source: sourceFile,
+			Metadata: &Metadata{
+				Title:    title,
+				Subtitle: subtitle,
 			},
 		},
 	}

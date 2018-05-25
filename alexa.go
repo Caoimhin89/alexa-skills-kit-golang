@@ -177,13 +177,13 @@ type VideoAppDirective struct {
 // VideoItem contains a video file for playback
 type VideoItem struct {
 	Source   string    `json:"source"`
-	Metadata *Metadata `json:"metadata"`
+	Metadata *Metadata `json:"metadata,omitempty"`
 }
 
 // Metadata contains additional information about the VideoItem
 type Metadata struct {
-	Title    string `json:"title"`
-	Subtitle string `json:"subtitle"`
+	Title    string `json:"title,omitempty"`
+	Subtitle string `json:"subtitle,omitempty"`
 }
 
 // Stream contains instructions on playing an audio stream.

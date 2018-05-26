@@ -325,6 +325,7 @@ func (r *Response) AddAudioPlayer(playerType, playBehavior, streamToken, url str
 		},
 	}
 	r.Directives = append(r.Directives, d)
+	r.ShouldSessionEnd = false
 }
 
 // AddVideoApp adds a VideoApp directive to the Response

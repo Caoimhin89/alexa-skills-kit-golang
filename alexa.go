@@ -203,8 +203,8 @@ type DialogDirective struct {
 
 // DelegateDirective contains directives for use in delegating Dialog prompts to Alexa
 type DelegateDirective struct {
-	Type          string `json:"type"`
-	UpdatedIntent string `json:"updatedIntent,omitempty"`
+	Type          string  `json:"type"`
+	UpdatedIntent *Intent `json:"updatedIntent,omitempty"`
 }
 
 // ProcessRequest handles a request passed from Alexa

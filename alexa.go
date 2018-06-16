@@ -361,7 +361,7 @@ func (r *Response) AddDialogDirective(dialogType, slotToElicit, slotToConfirm st
 }
 
 // AddDialogDirective adds a Delegate directive to the Response
-func (r *Response) AddDelegateDirective(dialogType, intent *Intent) {
+func (r *Response) AddDelegateDirective(dialogType string, intent *Intent) {
 	d := DelegateDirective{
 		Type:          dialogType,
 		UpdatedIntent: intent,

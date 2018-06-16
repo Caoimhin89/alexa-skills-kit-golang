@@ -201,6 +201,12 @@ type DialogDirective struct {
 	UpdatedIntent *Intent `json:"updatedIntent,omitempty"`
 }
 
+// DelegateDirective contains directives for use in delegating Dialog prompts to Alexa
+type DelegateDirective struct {
+	Type          string `json:"type"`
+	UpdatedIntent string `json:"updatedIntent,omitempty"`
+}
+
 // ProcessRequest handles a request passed from Alexa
 func (alexa *Alexa) ProcessRequest(ctx context.Context, requestEnv *RequestEnvelope) (*ResponseEnvelope, error) {
 
@@ -349,6 +355,15 @@ func (r *Response) AddDialogDirective(dialogType, slotToElicit, slotToConfirm st
 		Type:          dialogType,
 		SlotToElicit:  slotToElicit,
 		SlotToConfirm: slotToConfirm,
+		UpdatedIntent: intent,
+	}
+	r.Directives = append(r.Directives, d)
+}
+
+// AddDialogDirective adds a Delegate directive to the Response
+func (r *Response) AddDelegateDirective(dialogType, intent *Intent) {
+	d := DelegateDirective{
+		Type:          dialogType,
 		UpdatedIntent: intent,
 	}
 	r.Directives = append(r.Directives, d)

@@ -126,7 +126,7 @@ type Response struct {
 	Card             *Card         `json:"card,omitempty"`
 	Reprompt         *Reprompt     `json:"reprompt,omitempty"`
 	Directives       []interface{} `json:"directives,omitempty"`
-	ShouldSessionEnd *bool         `json:"shouldEndSession, omitempty"`
+	ShouldSessionEnd *bool         `json:"shouldEndSession,omitempty"`
 }
 
 // OutputSpeech contains the data the defines what Alexa should say to the user.

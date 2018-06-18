@@ -126,7 +126,7 @@ type Response struct {
 	Card             *Card         `json:"card,omitempty"`
 	Reprompt         *Reprompt     `json:"reprompt,omitempty"`
 	Directives       []interface{} `json:"directives,omitempty"`
-	ShouldSessionEnd bool          `json:"shouldEndSession"`
+	ShouldSessionEnd bool          `json:"shouldEndSession, omitempty"`
 }
 
 // OutputSpeech contains the data the defines what Alexa should say to the user.
@@ -232,7 +232,7 @@ func (alexa *Alexa) ProcessRequest(ctx context.Context, requestEnv *RequestEnvel
 	responseEnv := &ResponseEnvelope{}
 	responseEnv.Version = sdkVersion
 	responseEnv.Response = &Response{}
-	responseEnv.Response.ShouldSessionEnd = true // Set default value.
+	//	responseEnv.Response.ShouldSessionEnd = true // Set default value.
 
 	response := responseEnv.Response
 

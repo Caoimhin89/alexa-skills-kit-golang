@@ -122,9 +122,9 @@ type ResponseEnvelope struct {
 
 // Response contains the body of the response.
 type Response struct {
-	OutputSpeech     *OutputSpeech `json:"outputSpeech"`
-	Card             *Card         `json:"card"`
-	Reprompt         *Reprompt     `json:"reprompt"`
+	OutputSpeech     *OutputSpeech `json:"outputSpeech,omitempty"`
+	Card             *Card         `json:"card,omitempty"`
+	Reprompt         *Reprompt     `json:"reprompt,omitempty"`
 	Directives       []interface{} `json:"directives,omitempty"`
 	ShouldSessionEnd *bool         `json:"shouldEndSession,omitempty"`
 }

@@ -129,8 +129,12 @@ type ResolutionStatus struct {
 }
 
 type ResolutionValue struct {
-	Value string `json:"value"`
-	Id    string `json:"id"`
+	Value *SlotValue `json:"value"`
+}
+
+type SlotValue struct {
+	Name string `json:"name"`
+	Id   string `json:"id"`
 }
 
 // ResponseEnvelope contains the Response and additional attributes.

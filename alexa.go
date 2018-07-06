@@ -107,10 +107,30 @@ type Intent struct {
 
 // IntentSlot contains the data for one Slot
 type IntentSlot struct {
-	Name               string `json:"name"`
-	ConfirmationStatus string `json:"confirmationStatus,omitempty"`
-	Value              string `json:"value"`
-	ID                 string `json:"id,omitempty"`
+	Name               string      `json:"name"`
+	ConfirmationStatus string      `json:"confirmationStatus,omitempty"`
+	Value              string      `json:"value"`
+	ID                 string      `json:"id,omitempty"`
+	Resolutions        *Resolution `json:"resolutions,omitempty"`
+}
+
+type Resolution struct {
+	ResolutionsPerAuthority []Authority `json:"resolutionsPerAuthority"`
+}
+
+type Authority struct {
+	Authority string            `json:"authority"`
+	Status    *ResolutionStatus `json:"status"`
+	Values    []ResolutionValue `json:"values"`
+}
+
+type ResolutionStatus struct {
+	Code string `json:"code"`
+}
+
+type ResolutionValue struct {
+	Value string `json:"value"`
+	Id    string `json:"id"`
 }
 
 // ResponseEnvelope contains the Response and additional attributes.

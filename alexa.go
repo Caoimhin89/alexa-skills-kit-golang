@@ -231,6 +231,37 @@ type DelegateDirective struct {
 	UpdatedIntent *Intent `json:"updatedIntent,omitempty"`
 }
 
+// DisplayDirective contains directives for use in template rendering for Echo devices with screens
+type DisplayDirective struct {
+	Type	string	`json:"type"`
+	Template	Template struct {
+		Type	string	`json:"type"`
+		Token	string	`json:"token"`
+		BackButton	string	`json:"backButton"`
+		BackgroundImage	BackgroundImage struct {
+			ContentDescription	string	`json:"contentDescription"`
+			Sources	[]Source struct {
+				Url	string	`json:"url"`
+			}	`json:"sources"`
+		}	`json:"backgroundImage"`
+		Title	string	`json:"title"`
+		TextContent	TextContent struct {
+			PrimaryText	PrimaryText struct {
+				Text	string	`json:"text"`
+				Type	string	`json:"type"`
+			}	`json:"primaryText"`
+			SecondaryText	SecondaryText struct {
+				Text	string	`json:"text"`
+				Type	string	`json:"type"`
+			}	`json:"secondaryText"`
+			TertiaryText	TertiaryText struct {
+				Text	string	`json:"text"`
+				Type	string	`json:"type"`
+			}	`json:"tertiaryText"`
+		}	`json:"textContent"`
+	}	`json:"template"`
+}
+
 // ProcessRequest handles a request passed from Alexa
 func (alexa *Alexa) ProcessRequest(ctx context.Context, requestEnv *RequestEnvelope) (*ResponseEnvelope, error) {
 

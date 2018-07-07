@@ -233,33 +233,44 @@ type DelegateDirective struct {
 
 // DisplayDirective contains directives for use in template rendering for Echo devices with screens
 type DisplayDirective struct {
-	Type	string	`json:"type"`
-	Template	Template struct {
-		Type	string	`json:"type"`
-		Token	string	`json:"token"`
-		BackButton	string	`json:"backButton"`
-		BackgroundImage	BackgroundImage struct {
-			ContentDescription	string	`json:"contentDescription"`
-			Sources	[]Source struct {
-				Url	string	`json:"url"`
-			}	`json:"sources"`
-		}	`json:"backgroundImage"`
-		Title	string	`json:"title"`
-		TextContent	TextContent struct {
-			PrimaryText	PrimaryText struct {
-				Text	string	`json:"text"`
-				Type	string	`json:"type"`
-			}	`json:"primaryText"`
-			SecondaryText	SecondaryText struct {
-				Text	string	`json:"text"`
-				Type	string	`json:"type"`
-			}	`json:"secondaryText"`
-			TertiaryText	TertiaryText struct {
-				Text	string	`json:"text"`
-				Type	string	`json:"type"`
-			}	`json:"tertiaryText"`
-		}	`json:"textContent"`
-	}	`json:"template"`
+	Type     string    `json:"type"`
+	Template *Template `json:"template"`
+}
+
+type DisplayTemplate struct {
+	Type            string              `json:"type"`
+	Token           string              `json:"token"`
+	BackButton      string              `json:"backButton"`
+	BackgroundImage *DisplayImage       `json:"backgroundImage"`
+	Title           string              `json:"title"`
+	TextContent     *DisplayTextContent `json:"textContent"`
+}
+
+type DisplayImage struct {
+	ContentDescription string          `json:"contentDescription"`
+	Sources            []DisplaySource `json:"sources"`
+}
+
+type DisplaySource struct {
+	Url          string  `json:"url"`
+	Size         *string `json:"size"`
+	WidthPixels  *int    `json:"widthPixels"`
+	HeightPixels *int    `json:"heightPixels"`
+}
+
+type DisplayTextContent struct {
+	PrimaryText struct {
+		Text string `json:"text"`
+		Type string `json:"type"`
+	} `json:"primaryText"`
+	SecondaryText struct {
+		Text string `json:"text"`
+		Type string `json:"type"`
+	} `json:"secondaryText"`
+	TertiaryText struct {
+		Text string `json:"text"`
+		Type string `json:"type"`
+	} `json:"tertiaryText"`
 }
 
 // ProcessRequest handles a request passed from Alexa
@@ -414,11 +425,57 @@ func (r *Response) AddDialogDirective(dialogType, slotToElicit, slotToConfirm st
 	r.Directives = append(r.Directives, d)
 }
 
-// AddDialogDirective adds a Delegate directive to the Response
+// AddDelegateDirective adds a Delegate directive to the Response
 func (r *Response) AddDelegateDirective(dialogType string, intent *Intent) {
 	d := DelegateDirective{
 		Type:          dialogType,
 		UpdatedIntent: intent,
+	}
+	r.Directives = append(r.Directives, d)
+}
+
+// AddDisplayDirective adds a Display directive to the Response
+func (r *Response) AddDisplayDirective(templateType, token, backButton, bkgrndImgDesc, bkgrndUrl, bkgrndSize, bkgrndWidth, bkgrndHeight, imgDesc, imgUrl, imgSize, imgWidth, imgHeight, primaryTxt, secondaryTxt, tertiaryTxt string) {
+	d := DisplayDirective{
+		Type: "Display.RenderTemplate",
+		Template: &Template{
+			Type:       templateType,
+			Token:      token,
+			BackButton: backButton,
+			BackgroundImage: BackgroundImage{
+				ContentDescription: bkgrndImgDesc,
+				Sources: []DisplaySource{
+					Url:          bkgrndUrl,
+					Size:         bkgrndSize,
+					WidthPixels:  bkgrndWidth,
+					HeightPixels: bkgrndHeight,
+				},
+				Title: title,
+				Image: &DisplayImage{
+					ContentDescription: imgDesc,
+					Sources: []DisplaySource{
+						Url:          imgUrl,
+						Size:         imgSize,
+						WidthPixels:  imgWidth,
+						HeightPixels: imgHeight,
+					},
+				},
+				TextContent: &DisplayTextContent{
+					PrimaryText: PrimaryText{
+						Text: primaryTxt,
+						Type: "PlainText",
+					},
+					SecondaryText: SecondaryText{
+						Text: secondaryTxt,
+						Type: "PlainText",
+					},
+					TertiaryText: TertiaryText{
+						Text: tertiaryTxt,
+						Type: "PlainText",
+					},
+				},
+			},
+		},
 	}
 	r.Directives = append(r.Directives, d)
 }

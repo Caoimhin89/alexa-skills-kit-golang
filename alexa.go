@@ -261,18 +261,14 @@ type DisplaySource struct {
 }
 
 type DisplayTextContent struct {
-	PrimaryText struct {
-		Text string `json:"text"`
-		Type string `json:"type"`
-	} `json:"primaryText"`
-	SecondaryText struct {
-		Text string `json:"text"`
-		Type string `json:"type"`
-	} `json:"secondaryText"`
-	TertiaryText struct {
-		Text string `json:"text"`
-		Type string `json:"type"`
-	} `json:"tertiaryText"`
+	PrimaryText   DisplayText `json:"primaryText"`
+	SecondaryText DisplayText `json:"secondaryText"`
+	TertiaryText  DisplayText `json:"tertiaryText"`
+}
+
+type DisplayText struct {
+	Text string `json:"text"`
+	Type string `json:"type"`
 }
 
 type DisplayListItem struct {
@@ -529,15 +525,15 @@ func SetBodyTemplate1(backBtn bool, token, title, backgroundImgUrl, backgroundIm
 		},
 		Title: &title,
 		TextContent: &DisplayTextContent{
-			PrimaryText: PrimaryText{
+			PrimaryText: DisplayText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: SecondaryText{
+			SecondaryText: DisplayText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: TertiaryText{
+			TertiaryText: DisplayText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},
@@ -577,15 +573,15 @@ func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, seco
 			},
 		},
 		TextContent: &DisplayTextContent{
-			PrimaryText: PrimaryText{
+			PrimaryText: DisplayText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: SecondaryText{
+			SecondaryText: DisplayText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: TertiaryText{
+			TertiaryText: DisplayText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},
@@ -628,15 +624,15 @@ func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, seco
 			},
 		},
 		TextContent: &DisplayTextContent{
-			PrimaryText: PrimaryText{
+			PrimaryText: DisplayText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: SecondaryText{
+			SecondaryText: DisplayText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: TertiaryText{
+			TertiaryText: DisplayText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},
@@ -678,15 +674,15 @@ func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize,
 			},
 		},
 		TextContent: &DisplayTextContent{
-			PrimaryText: PrimaryText{
+			PrimaryText: DisplayText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: SecondaryText{
+			SecondaryText: DisplayText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: TertiaryText{
+			TertiaryText: DisplayText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},

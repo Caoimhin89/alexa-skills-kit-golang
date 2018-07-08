@@ -243,6 +243,7 @@ type DisplayTemplate struct {
 	Token           string              `json:"token"`
 	BackButton      string              `json:"backButton"`
 	BackgroundImage *DisplayImage       `json:"backgroundImage,omitempty"`
+	Image           *DisplayImage       `json:"image,omitempty"`
 	Title           *string             `json:"title,omitempty"`
 	TextContent     *DisplayTextContent `json:"textContent,omitempty"`
 	ListItems       *[]DisplayListItem  `json:"listItems,omitempty"`
@@ -542,7 +543,7 @@ func SetBodyTemplate1(backBtn bool, token, title, backgroundImgUrl, backgroundIm
 }
 
 // SetBodyTemplate2
-func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, secondaryText, secondaryType, tertiaryText, tertiaryType, backgroundImgUrl, backgroundImgSize, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
+func SetBodyTemplate2(backBtn bool, token, title, primeText, primeType, secondaryText, secondaryType, tertiaryText, tertiaryType, backgroundImgUrl, backgroundImgSize, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -590,7 +591,7 @@ func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, seco
 }
 
 // SetBodyTemplate3
-func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
+func SetBodyTemplate3(backBtn bool, token, title, primeType, primeText, secondaryType, secondaryText, tertiaryType, tertiaryText, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -641,7 +642,7 @@ func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, seco
 }
 
 // SetBodyTemplate6
-func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
+func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc, primeType, primeText, secondaryType, secondaryText, tertiaryType, tertiaryText string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"

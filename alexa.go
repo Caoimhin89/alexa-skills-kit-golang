@@ -452,7 +452,7 @@ func (r *Response) AddDisplayDirective(t *DisplayTemplate) {
 }
 
 // SetListTemplate1
-func SetListTemplate1(backBtn bool, token, backgroundImgDesc, backgroundImgUrl, backgroundImgSize string, backgroundImgWidth, backgroundImgHeight int, listItems *[]DisplayListItem) {
+func SetListTemplate1(backBtn bool, token, title, backgroundImgDesc, backgroundImgUrl, backgroundImgSize string, backgroundImgWidth, backgroundImgHeight int, listItems *[]DisplayListItem) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -479,7 +479,7 @@ func SetListTemplate1(backBtn bool, token, backgroundImgDesc, backgroundImgUrl, 
 }
 
 // SetListTemplate2
-func SetListTemplate2(backBtn bool, token, title, backgroundImgUrl, backgroundImgSize string, backgroundImgWidth, backgroundImgHeight int, listItems *[]DisplayListItem) {
+func SetListTemplate2(backBtn bool, token, title, backgroundImgUrl, backgroundImgSize, backgroundImgDesc string, backgroundImgWidth, backgroundImgHeight int, listItems *[]DisplayListItem) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -506,7 +506,7 @@ func SetListTemplate2(backBtn bool, token, title, backgroundImgUrl, backgroundIm
 }
 
 // SetBodyTemplate1
-func SetBodyTemplate1(backBtn bool, token, title, primeType, primeText, secondaryType, secondaryText, tertiaryType, tertiaryText string) {
+func SetBodyTemplate1(backBtn bool, token, title, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, primeType, primeText, secondaryType, secondaryText, tertiaryType, tertiaryText string, backgroundImgWidth, backgroundImgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -529,15 +529,15 @@ func SetBodyTemplate1(backBtn bool, token, title, primeType, primeText, secondar
 		},
 		Title: &title,
 		TextContent: &DisplayTextContent{
-			PrimaryText: {
+			PrimaryText: PrimaryText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: {
+			SecondaryText: SecondaryText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: {
+			TertiaryText: TertiaryText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},
@@ -546,7 +546,7 @@ func SetBodyTemplate1(backBtn bool, token, title, primeType, primeText, secondar
 }
 
 // SetBodyTemplate2
-func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, secondaryText, secondaryType, tertiaryText, tertiaryType, backgroundImgUrl, backgroundImgSize, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, secondaryText, secondaryType, tertiaryText, tertiaryType, backgroundImgUrl, backgroundImgSize, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -577,15 +577,15 @@ func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, seco
 			},
 		},
 		TextContent: &DisplayTextContent{
-			PrimaryText: {
+			PrimaryText: PrimaryText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: {
+			SecondaryText: SecondaryText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: {
+			TertiaryText: TertiaryText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},
@@ -594,7 +594,7 @@ func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, seco
 }
 
 // SetBodyTemplate3
-func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -628,15 +628,15 @@ func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, seco
 			},
 		},
 		TextContent: &DisplayTextContent{
-			PrimaryText: {
+			PrimaryText: PrimaryText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: {
+			SecondaryText: SecondaryText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: {
+			TertiaryText: TertiaryText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},
@@ -645,7 +645,7 @@ func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, seco
 }
 
 // SetBodyTemplate6
-func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -678,15 +678,15 @@ func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize,
 			},
 		},
 		TextContent: &DisplayTextContent{
-			PrimaryText: {
+			PrimaryText: PrimaryText{
 				Text: primeText,
 				Type: primeType,
 			},
-			SecondaryText: {
+			SecondaryText: SecondaryText{
 				Text: secondaryText,
 				Type: secondaryType,
 			},
-			TertiaryText: {
+			TertiaryText: TertiaryText{
 				Text: tertiaryText,
 				Type: tertiaryType,
 			},

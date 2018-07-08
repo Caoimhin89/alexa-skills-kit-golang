@@ -233,17 +233,19 @@ type DelegateDirective struct {
 
 // DisplayDirective contains directives for use in template rendering for Echo devices with screens
 type DisplayDirective struct {
-	Type     string    `json:"type"`
-	Template *Template `json:"template"`
+	Type     string           `json:"type"`
+	Template *DisplayTemplate `json:"template"`
 }
 
+// DisplayTemplate contains properties of BodyTemplate and ListTemplate interfaces
 type DisplayTemplate struct {
 	Type            string              `json:"type"`
 	Token           string              `json:"token"`
 	BackButton      string              `json:"backButton"`
-	BackgroundImage *DisplayImage       `json:"backgroundImage"`
-	Title           string              `json:"title"`
-	TextContent     *DisplayTextContent `json:"textContent"`
+	BackgroundImage *DisplayImage       `json:"backgroundImage,omitempty"`
+	Title           *string             `json:"title,omitempty"`
+	TextContent     *DisplayTextContent `json:"textContent,omitempty"`
+	ListItems       *[]DisplayListItem  `json:"listItems,omitempty"`
 }
 
 type DisplayImage struct {
@@ -253,9 +255,9 @@ type DisplayImage struct {
 
 type DisplaySource struct {
 	Url          string  `json:"url"`
-	Size         *string `json:"size"`
-	WidthPixels  *int    `json:"widthPixels"`
-	HeightPixels *int    `json:"heightPixels"`
+	Size         *string `json:"size,omitempty"`
+	WidthPixels  *int    `json:"widthPixels,omitempty"`
+	HeightPixels *int    `json:"heightPixels,omitempty"`
 }
 
 type DisplayTextContent struct {
@@ -271,6 +273,12 @@ type DisplayTextContent struct {
 		Text string `json:"text"`
 		Type string `json:"type"`
 	} `json:"tertiaryText"`
+}
+
+type DisplayListItem struct {
+	Token       string              `json:"token,omitempty"`
+	Image       *DisplayImage       `json:"image"`
+	TextContent *DisplayTextContent `json:"textContent"`
 }
 
 // ProcessRequest handles a request passed from Alexa
@@ -435,49 +443,272 @@ func (r *Response) AddDelegateDirective(dialogType string, intent *Intent) {
 }
 
 // AddDisplayDirective adds a Display directive to the Response
-func (r *Response) AddDisplayDirective(templateType, token, backButton, bkgrndImgDesc, bkgrndUrl, bkgrndSize, bkgrndWidth, bkgrndHeight, imgDesc, imgUrl, imgSize, imgWidth, imgHeight, primaryTxt, secondaryTxt, tertiaryTxt string) {
+func (r *Response) AddDisplayDirective(t *DisplayTemplate) {
 	d := DisplayDirective{
-		Type: "Display.RenderTemplate",
-		Template: &Template{
-			Type:       templateType,
-			Token:      token,
-			BackButton: backButton,
-			BackgroundImage: BackgroundImage{
-				ContentDescription: bkgrndImgDesc,
-				Sources: []DisplaySource{
-					Url:          bkgrndUrl,
-					Size:         bkgrndSize,
-					WidthPixels:  bkgrndWidth,
-					HeightPixels: bkgrndHeight,
-				},
-				Title: title,
-				Image: &DisplayImage{
-					ContentDescription: imgDesc,
-					Sources: []DisplaySource{
-						Url:          imgUrl,
-						Size:         imgSize,
-						WidthPixels:  imgWidth,
-						HeightPixels: imgHeight,
-					},
-				},
-				TextContent: &DisplayTextContent{
-					PrimaryText: PrimaryText{
-						Text: primaryTxt,
-						Type: "PlainText",
-					},
-					SecondaryText: SecondaryText{
-						Text: secondaryTxt,
-						Type: "PlainText",
-					},
-					TertiaryText: TertiaryText{
-						Text: tertiaryTxt,
-						Type: "PlainText",
-					},
-				},
+		Type:     "Display.RenderTemplate",
+		Template: &t,
+	}
+	r.Directives = append(r.Directives, d)
+}
+
+// SetListTemplate1
+func SetListTemplate1(backBtn bool, token, backgroundImgDesc, backgroundImgUrl, backgroundImgSize string, backgroundImgWidth, backgroundImgHeight int, listItems *[]DisplayListItem) {
+	backButton := "VISIBLE"
+	if backbtn == false {
+		backButton = "HIDDEN"
+	}
+
+	return &DisplayTemplate{
+		Type:       "ListTemplate1",
+		Token:      token,
+		BackButton: backButton,
+		BackgroundImage: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          backgroundImgUrl,
+				Size:         &backgroundImgSize,
+				WidthPixels:  &backgroundImgWidth,
+				HeightPixels: &backgroundImgHeight,
+			},
+		},
+		Title:     &title,
+		ListItems: listItems,
+	}
+}
+
+// SetListTemplate2
+func SetListTemplate2(backBtn bool, token, title, backgroundImgUrl, backgroundImgSize string, backgroundImgWidth, backgroundImgHeight int, listItems *[]DisplayListItem) {
+	backButton := "VISIBLE"
+	if backBtn == false {
+		backButton = "HIDDEN"
+	}
+
+	return &DisplayTemplate{
+		Type:       "ListTemplate2",
+		Token:      token,
+		BackButton: backButton,
+		BackgroundImage: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          backgroundImgUrl,
+				Size:         &backgroundImgSize,
+				WidthPixels:  &backgroundImgWidth,
+				HeightPixels: &backgroundImgHeight,
+			},
+		},
+		Title:     &title,
+		ListItems: listItems,
+	}
+}
+
+// SetBodyTemplate1
+func SetBodyTemplate1(backBtn bool, token, title, primeType, primeText, secondaryType, secondaryText, tertiaryType, tertiaryText string) {
+	backButton := "VISIBLE"
+	if backBtn == false {
+		backButton = "HIDDEN"
+	}
+
+	return &DisplayTemplate{
+		Type:       "BodyTemplate1",
+		Token:      token,
+		BackButton: backButton,
+		BackgroundImage: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          backgroundImgUrl,
+				Size:         &backgroundImgSize,
+				WidthPixels:  &backgroundImgWidth,
+				HeightPixels: &backgroundImgHeight,
+			},
+		},
+		Title: &title,
+		TextContent: &DisplayTextContent{
+			PrimaryText: {
+				Text: primeText,
+				Type: primeType,
+			},
+			SecondaryText: {
+				Text: secondaryText,
+				Type: secondaryType,
+			},
+			TertiaryText: {
+				Text: tertiaryText,
+				Type: tertiaryType,
 			},
 		},
 	}
-	r.Directives = append(r.Directives, d)
+}
+
+// SetBodyTemplate2
+func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, secondaryText, secondaryType, tertiaryText, tertiaryType, backgroundImgUrl, backgroundImgSize, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+	backButton := "VISIBLE"
+	if backBtn == false {
+		backButton = "HIDDEN"
+	}
+
+	return &DisplayTemplate{
+		Type:       "BodyTemplate2",
+		Token:      token,
+		BackButton: backButton,
+		BackgroundImage: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          backgroundImgUrl,
+				Size:         &backgroundImgSize,
+				WidthPixels:  &backgroundImgWidth,
+				HeightPixels: &backgroundImgHeight,
+			},
+		},
+		Title: &title,
+		Image: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          imgUrl,
+				Size:         &imgSize,
+				WidthPixels:  &imgWidth,
+				HeightPixels: &imgHeight,
+			},
+		},
+		TextContent: &DisplayTextContent{
+			PrimaryText: {
+				Text: primeText,
+				Type: primeType,
+			},
+			SecondaryText: {
+				Text: secondaryText,
+				Type: secondaryType,
+			},
+			TertiaryText: {
+				Text: tertiaryText,
+				Type: tertiaryType,
+			},
+		},
+	}
+}
+
+// SetBodyTemplate3
+func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+	backButton := "VISIBLE"
+	if backBtn == false {
+		backButton = "HIDDEN"
+	}
+
+	return &DisplayTemplate{
+		Type:       "BodyTemplate3",
+		Token:      token,
+		BackButton: backButton,
+		BackgroundImage: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          backgroundImgUrl,
+				Size:         &backgroundImgSize,
+				WidthPixels:  &backgroundImgWidth,
+				HeightPixels: &backgroundImgHeight,
+			},
+		},
+		Title: &title,
+		Image: &DisplayImage{
+			ContentDescription: imgDesc,
+			Sources: []DisplaySource{
+				Url:          imgUrl,
+				Size:         &imgSize,
+				WidthPixels:  &imgWidth,
+				HeightPixels: &imgHeight,
+			},
+		},
+		TextContent: &DisplayTextContent{
+			PrimaryText: {
+				Text: primeText,
+				Type: primeType,
+			},
+			SecondaryText: {
+				Text: secondaryText,
+				Type: secondaryType,
+			},
+			TertiaryText: {
+				Text: tertiaryText,
+				Type: tertiaryType,
+			},
+		},
+	}
+}
+
+// SetBodyTemplate6
+func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc, primaryType, primaryText, secondaryType, secondaryText, tertiaryType, tertiaryText string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+	backButton := "VISIBLE"
+	if backBtn == false {
+		backButton = "HIDDEN"
+	}
+
+	return &DisplayTemplate{
+		Type:       "BodyTemplate6",
+		Token:      token,
+		BackButton: backButton,
+		BackgroundImage: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          backgroundImgUrl,
+				Size:         &backgroundImgSize,
+				WidthPixels:  &backgroundImgWidth,
+				HeightPixels: &backgroundImgHeight,
+			},
+		},
+		Image: &DisplayImage{
+			ContentDescription: imgDesc,
+			Sources: []DisplaySource{
+				Url:          imgUrl,
+				Size:         &imgSize,
+				WidthPixels:  &imgWidth,
+				HeightPixels: &imgHeight,
+			},
+		},
+		TextContent: &DisplayTextContent{
+			PrimaryText: {
+				Text: primeText,
+				Type: primeType,
+			},
+			SecondaryText: {
+				Text: secondaryText,
+				Type: secondaryType,
+			},
+			TertiaryText: {
+				Text: tertiaryText,
+				Type: tertiaryType,
+			},
+		},
+	}
+}
+
+// SetBodyTemplate7
+func SetBodyTemplate7(backBtn bool, token, title, backgroundImgDesc, backgroundImgUrl, backgroundImgSize, imgDesc, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+	backButton := "VISIBLE"
+	if backBtn == false {
+		backButton = "HIDDEN"
+	}
+
+	return &DisplayTemplate{
+		Type:       "BodyTemplate7",
+		Token:      token,
+		BackButton: backButton,
+		BackgroundImage: &DisplayImage{
+			ContentDescription: backgroundImgDesc,
+			Sources: []DisplaySource{
+				Url:          backgroundImgUrl,
+				Size:         &backgroundImgSize,
+				WidthPixels:  &backgroundImgWidth,
+				HeightPixels: &backgroundImgHeight,
+			},
+		},
+		Image: &DisplayImage{
+			ContentDescription: imgDesc,
+			Sources: []DisplaySource{
+				Url:          imgUrl,
+				Size:         &imgSize,
+				WidthPixels:  &imgWidth,
+				HeightPixels: &imgHeight,
+			},
+		},
+	}
 }
 
 // verifyApplicationId verifies that the ApplicationID sent in the request

@@ -446,7 +446,7 @@ func (r *Response) AddDelegateDirective(dialogType string, intent *Intent) {
 func (r *Response) AddDisplayDirective(t *DisplayTemplate) {
 	d := DisplayDirective{
 		Type:     "Display.RenderTemplate",
-		Template: &t,
+		Template: t,
 	}
 	r.Directives = append(r.Directives, d)
 }
@@ -454,7 +454,7 @@ func (r *Response) AddDisplayDirective(t *DisplayTemplate) {
 // SetListTemplate1
 func SetListTemplate1(backBtn bool, token, backgroundImgDesc, backgroundImgUrl, backgroundImgSize string, backgroundImgWidth, backgroundImgHeight int, listItems *[]DisplayListItem) {
 	backButton := "VISIBLE"
-	if backbtn == false {
+	if backBtn == false {
 		backButton = "HIDDEN"
 	}
 
@@ -465,10 +465,12 @@ func SetListTemplate1(backBtn bool, token, backgroundImgDesc, backgroundImgUrl, 
 		BackgroundImage: &DisplayImage{
 			ContentDescription: backgroundImgDesc,
 			Sources: []DisplaySource{
-				Url:          backgroundImgUrl,
-				Size:         &backgroundImgSize,
-				WidthPixels:  &backgroundImgWidth,
-				HeightPixels: &backgroundImgHeight,
+				DisplaySource{
+					Url:          backgroundImgUrl,
+					Size:         &backgroundImgSize,
+					WidthPixels:  &backgroundImgWidth,
+					HeightPixels: &backgroundImgHeight,
+				},
 			},
 		},
 		Title:     &title,
@@ -490,10 +492,12 @@ func SetListTemplate2(backBtn bool, token, title, backgroundImgUrl, backgroundIm
 		BackgroundImage: &DisplayImage{
 			ContentDescription: backgroundImgDesc,
 			Sources: []DisplaySource{
-				Url:          backgroundImgUrl,
-				Size:         &backgroundImgSize,
-				WidthPixels:  &backgroundImgWidth,
-				HeightPixels: &backgroundImgHeight,
+				DisplaySource{
+					Url:          backgroundImgUrl,
+					Size:         &backgroundImgSize,
+					WidthPixels:  &backgroundImgWidth,
+					HeightPixels: &backgroundImgHeight,
+				},
 			},
 		},
 		Title:     &title,
@@ -515,10 +519,12 @@ func SetBodyTemplate1(backBtn bool, token, title, primeType, primeText, secondar
 		BackgroundImage: &DisplayImage{
 			ContentDescription: backgroundImgDesc,
 			Sources: []DisplaySource{
-				Url:          backgroundImgUrl,
-				Size:         &backgroundImgSize,
-				WidthPixels:  &backgroundImgWidth,
-				HeightPixels: &backgroundImgHeight,
+				DisplaySource{
+					Url:          backgroundImgUrl,
+					Size:         &backgroundImgSize,
+					WidthPixels:  &backgroundImgWidth,
+					HeightPixels: &backgroundImgHeight,
+				},
 			},
 		},
 		Title: &title,
@@ -550,9 +556,8 @@ func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, seco
 		Type:       "BodyTemplate2",
 		Token:      token,
 		BackButton: backButton,
-		BackgroundImage: &DisplayImage{
-			ContentDescription: backgroundImgDesc,
-			Sources: []DisplaySource{
+		Sources: []DisplaySource{
+			DisplaySource{
 				Url:          backgroundImgUrl,
 				Size:         &backgroundImgSize,
 				WidthPixels:  &backgroundImgWidth,
@@ -563,10 +568,12 @@ func SetBodyTemplate2(backBtn bool, token, title, primaryText, primaryType, seco
 		Image: &DisplayImage{
 			ContentDescription: backgroundImgDesc,
 			Sources: []DisplaySource{
-				Url:          imgUrl,
-				Size:         &imgSize,
-				WidthPixels:  &imgWidth,
-				HeightPixels: &imgHeight,
+				DisplaySource{
+					Url:          imgUrl,
+					Size:         &imgSize,
+					WidthPixels:  &imgWidth,
+					HeightPixels: &imgHeight,
+				},
 			},
 		},
 		TextContent: &DisplayTextContent{
@@ -600,20 +607,24 @@ func SetBodyTemplate3(backBtn bool, token, title, primaryType, primaryText, seco
 		BackgroundImage: &DisplayImage{
 			ContentDescription: backgroundImgDesc,
 			Sources: []DisplaySource{
-				Url:          backgroundImgUrl,
-				Size:         &backgroundImgSize,
-				WidthPixels:  &backgroundImgWidth,
-				HeightPixels: &backgroundImgHeight,
+				DisplaySource{
+					Url:          backgroundImgUrl,
+					Size:         &backgroundImgSize,
+					WidthPixels:  &backgroundImgWidth,
+					HeightPixels: &backgroundImgHeight,
+				},
 			},
 		},
 		Title: &title,
 		Image: &DisplayImage{
 			ContentDescription: imgDesc,
 			Sources: []DisplaySource{
-				Url:          imgUrl,
-				Size:         &imgSize,
-				WidthPixels:  &imgWidth,
-				HeightPixels: &imgHeight,
+				DisplaySource{
+					Url:          imgUrl,
+					Size:         &imgSize,
+					WidthPixels:  &imgWidth,
+					HeightPixels: &imgHeight,
+				},
 			},
 		},
 		TextContent: &DisplayTextContent{
@@ -647,19 +658,23 @@ func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize,
 		BackgroundImage: &DisplayImage{
 			ContentDescription: backgroundImgDesc,
 			Sources: []DisplaySource{
-				Url:          backgroundImgUrl,
-				Size:         &backgroundImgSize,
-				WidthPixels:  &backgroundImgWidth,
-				HeightPixels: &backgroundImgHeight,
+				DisplaySource{
+					Url:          backgroundImgUrl,
+					Size:         &backgroundImgSize,
+					WidthPixels:  &backgroundImgWidth,
+					HeightPixels: &backgroundImgHeight,
+				},
 			},
 		},
 		Image: &DisplayImage{
 			ContentDescription: imgDesc,
 			Sources: []DisplaySource{
-				Url:          imgUrl,
-				Size:         &imgSize,
-				WidthPixels:  &imgWidth,
-				HeightPixels: &imgHeight,
+				DisplaySource{
+					Url:          imgUrl,
+					Size:         &imgSize,
+					WidthPixels:  &imgWidth,
+					HeightPixels: &imgHeight,
+				},
 			},
 		},
 		TextContent: &DisplayTextContent{
@@ -693,19 +708,23 @@ func SetBodyTemplate7(backBtn bool, token, title, backgroundImgDesc, backgroundI
 		BackgroundImage: &DisplayImage{
 			ContentDescription: backgroundImgDesc,
 			Sources: []DisplaySource{
-				Url:          backgroundImgUrl,
-				Size:         &backgroundImgSize,
-				WidthPixels:  &backgroundImgWidth,
-				HeightPixels: &backgroundImgHeight,
+				DisplaySource{
+					Url:          backgroundImgUrl,
+					Size:         &backgroundImgSize,
+					WidthPixels:  &backgroundImgWidth,
+					HeightPixels: &backgroundImgHeight,
+				},
 			},
 		},
 		Image: &DisplayImage{
 			ContentDescription: imgDesc,
 			Sources: []DisplaySource{
-				Url:          imgUrl,
-				Size:         &imgSize,
-				WidthPixels:  &imgWidth,
-				HeightPixels: &imgHeight,
+				DisplaySource{
+					Url:          imgUrl,
+					Size:         &imgSize,
+					WidthPixels:  &imgWidth,
+					HeightPixels: &imgHeight,
+				},
 			},
 		},
 	}

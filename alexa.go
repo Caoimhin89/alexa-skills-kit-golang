@@ -543,7 +543,7 @@ func SetBodyTemplate1(backBtn bool, token, title, backgroundImgUrl, backgroundIm
 }
 
 // SetBodyTemplate2
-func SetBodyTemplate2(backBtn bool, token, title, primeText, primeType, secondaryText, secondaryType, tertiaryText, tertiaryType, backgroundImgUrl, backgroundImgSize, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
+func SetBodyTemplate2(backBtn bool, token, title, primeText, primeType, secondaryText, secondaryType, tertiaryText, tertiaryType, backgroundImgUrl, backgroundImgSize, backgroundImgDesc, imgUrl, imgSize, imgDesc string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
@@ -553,17 +553,19 @@ func SetBodyTemplate2(backBtn bool, token, title, primeText, primeType, secondar
 		Type:       "BodyTemplate2",
 		Token:      token,
 		BackButton: backButton,
-		Sources: []DisplaySource{
-			DisplaySource{
-				Url:          backgroundImgUrl,
-				Size:         &backgroundImgSize,
-				WidthPixels:  &backgroundImgWidth,
-				HeightPixels: &backgroundImgHeight,
+		BackgroundImage: &DisplayImage{
+			Sources: []DisplaySource{
+				DisplaySource{
+					Url:          backgroundImgUrl,
+					Size:         &backgroundImgSize,
+					WidthPixels:  &backgroundImgWidth,
+					HeightPixels: &backgroundImgHeight,
+				},
 			},
 		},
 		Title: &title,
 		Image: &DisplayImage{
-			ContentDescription: backgroundImgDesc,
+			ContentDescription: imgDesc,
 			Sources: []DisplaySource{
 				DisplaySource{
 					Url:          imgUrl,
@@ -692,7 +694,7 @@ func SetBodtyTemplate6(backBtn bool, token, backgroundImgUrl, backgroundImgSize,
 }
 
 // SetBodyTemplate7
-func SetBodyTemplate7(backBtn bool, token, title, backgroundImgDesc, backgroundImgUrl, backgroundImgSize, imgDesc, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) {
+func SetBodyTemplate7(backBtn bool, token, title, backgroundImgDesc, backgroundImgUrl, backgroundImgSize, imgDesc, imgUrl, imgSize string, backgroundImgWidth, backgroundImgHeight, imgWidth, imgHeight int) *DisplayTemplate {
 	backButton := "VISIBLE"
 	if backBtn == false {
 		backButton = "HIDDEN"
